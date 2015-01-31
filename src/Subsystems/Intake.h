@@ -12,6 +12,14 @@ private:
 public:
 	Intake();
 	void InitDefaultCommand();
+	void PullIn();
+	void PushOut();
+	void ClampClose();
+	void ClampOpen();
+	Solenoid *leftIntake;
+	Solenoid *rightIntake;
+	VictorSP *leftIntakeWheel;
+	VictorSP *rightIntakeWheel;
 };
 
 #endif

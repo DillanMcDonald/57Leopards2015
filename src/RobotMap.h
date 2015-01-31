@@ -9,7 +9,7 @@
  * the wiring easier and significantly reduces the number of magic numbers
  * floating around.
  */
- 
+ static const bool kMotorSafety = false;
 // For example to map the left and right motors, you could define the
 // following variables to use with your drivetrain subsystem.
 //const int LEFTMOTOR = 1;
@@ -32,12 +32,13 @@ static const uint32_t ch_LeftLeadM = 5;
 static const uint32_t ch_RightLeadM = 6;
 
 
-//Relay Constants
-static const uint32_t ch_intakewheels = 7;
+//CAN VictorSP for Intake Wheels
+static const uint32_t ch_leftIntakeWheel = 8;
+static const uint32_t ch_rightIntakeWheel = 9;
 
 //Solenoid channels
-static const uint32_t ch_LeftIntake = 8;
-static const uint32_t ch_RightIntake = 9;
+static const uint32_t ch_LeftIntake = 10;
+static const uint32_t ch_RightIntake = 11;
 
 //Digital IO
 
@@ -55,6 +56,14 @@ static const uint32_t ch_pickupButton = 4;
 static const uint32_t ch_rollerinButton = 5;
 static const uint32_t ch_rolleroutButton = 6;
 static const uint32_t ch_setdownButton = 7;
+
+//Digital IO
+static const uint32_t ch_LeftLeadLimit = 1;
+static const uint32_t ch_RightLeadLimit =2;
+
+//Analog IO
+static const uint32_t ch_LeftLeadscrewPot = 1;
+static const uint32_t ch_RightLeadscrewPot = 2;
 
 
 #endif
