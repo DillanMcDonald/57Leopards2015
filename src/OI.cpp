@@ -2,7 +2,7 @@
 #include "Commands/Close_Intake.h"
 #include "Commands/Coopertition_Setpoint.h"
 #include "Commands/Drive.h"
-#include "Commands/Intake.h"
+#include "Commands/IntakeCommand.h"
 #include "Commands/Lift_Down.h"
 #include "Commands/Lift_Up.h"
 #include "Commands/Open_Intake.h"
@@ -23,7 +23,7 @@ OI::OI()
 	coopertitionButton = new JoystickButton(boxingStick, ch_coopertitionButton);
 
 	//set the buttons to commands
-	rollerinButton -> WhenPressed(new Intake());
+	rollerinButton -> WhenPressed(new IntakeCommand());
 	rolleroutButton -> WhenPressed(new Outtake());
 	intakeclampButton -> WhenPressed(new Close_Intake());
 	intakeletgoButton -> WhenPressed(new Open_Intake());

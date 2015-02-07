@@ -4,6 +4,7 @@ Drive::Drive()
 {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(chassis);
+	Requires(chassis);
 }
 
 // Called just before this Command runs the first time
@@ -15,7 +16,7 @@ void Drive::Initialize()
 // Called repeatedly when this Command is scheduled to run
 void Drive::Execute()
 {
-
+	chassis->DriveWithJoystick(oi->GetDriveJoystick());
 }
 
 // Make this return true when this Command no longer needs to run execute()

@@ -1,25 +1,25 @@
 #include "Lift.h"
 #include "../RobotMap.h"
 
-Lift::Lift() :PIDSubsystem("Lift", Kp, Ki, Kd)
+Lift::Lift() :Subsystem("Lift")
 {
-leftLeadscrew= new VictorSP(ch_LeftLeadM);
-rightLeadscrew = new VictorSP(ch_RightLeadM);
+leftLeadscrew= new CANTalon(ch_LeftLeadM);
+rightLeadscrew = new CANTalon(ch_RightLeadM);
 leftlift_pot = new AnalogInput(ch_LeftLeadscrewPot);
 rightlift_pot = new AnalogInput(ch_RightLeadscrewPot);
 threshold = .02;
-leftlift_limit  = new DigitalInput(ch_LeftLeadLimit);
-rightlift_limit  = new DigitalInput(ch_RightLeadLimit);
-leftIsThere = false;
-rightIsThere = false;
+leftlifttop_limit  = new DigitalInput(ch_LeftLeadTopLimit);
+leftliftbot_limit  = new DigitalInput(ch_LeftLeadBotLimit);
+rightlifttop_limit  = new DigitalInput(ch_RightLeadTopLimit);
+rightliftbot_limit  = new DigitalInput(ch_RightLeadBotLimit);
+leftTopIsThere = false;
+rightTopIsThere = false;
+leftBotIsThere = false;
+rightBotIsThere = false;
 lastLeftHeight =1;
 lastRightHeight =1;
-
-/*Adv*/PIDController *controller = GetPIDController();
-
-controller->SetInputRange(MinInput, MaxInput);
-controller->SetOutputRange(MinOutput, MaxOutput);
-controller->SetAbsoluteTolerance(AbsErr);
+leftLeadscrew->SetPID(0.0,0.0,0.0,0.0);
+rightLeadscrew->SetPID(0.0,0.0,0.0,0.0);
 
 }
 
@@ -32,152 +32,82 @@ void Lift::InitDefaultCommand()
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
 
-double Lift::ReturnPIDInput() {
-	// Return your input value for the PID loop
-	// e.g. a sensor, like a potentiometer:
-	// yourPot->SetAverageVoltage() / kYourMaxVoltage;
-    leftliftheight = leftlift_pot->GetVoltage();
-    rightliftheight = rightlift_pot ->GetVoltage();
-	return leftliftheight;
-	return rightliftheight;
-}
-double Lift::GetLeftOutput() {
-	return leftMotorOut;
-}
-double Lift::GetRightOutput(){
-	return rightMotorOut;
-}
-void Lift::UsePIDOutput(double output) {
-	// Use output to drive your system, like a motor
-	// e.g. yourMotor->Set(output);
-	leftMotorOut = inverted ? -output : output;
-	rightMotorOut= inverted ? -output : output;
-		leftLeadscrew->Set(leftMotorOut);
-		rightLeadscrew->Set(rightMotorOut);
-}
-bool Lift::IsEnabled()
-{
-	return GetPIDController()->IsEnabled();
-}
-bool Lift::LeftLiftSpeed(float speed){        // Controls the speed of the left leadscrew for the lift
-	currentleftheight = GetLeftHeight();
-	leftIsThere = leftlift_limit->Get();
-	if(speed > 0.0)
-	{
-		if (currentleftheight > 1.95||leftIsThere == true)
-		{
-			leftLeadscrew->Set(0);
-			leftIsThere = true;
-		} else
-		{
-			leftLeadscrew->Set(speed);
-			leftIsThere = false;
+bool Lift::SetLeftLiftHeight(float setleftheight){
+	bool atsetheight =0;
+	leftLiftHeight= GetLeftHeight();
+	if(leftLiftHeight!=setleftheight && leftlifttop_limit == 0 && leftliftbot_limit == 0){
+		if(leftLiftHeight<setleftheight){
+			leftLeadscrew->Set(1.0);
 		}
-
-	} else if (speed < 0.0)
-	{
-		if(currentleftheight <.3 )
-		{
-			leftLeadscrew->Set(0);
-			leftIsThere = true;
-		} else
-		{
-			leftLeadscrew->Set(speed);
-			leftIsThere = false;
+		else{
+			leftLeadscrew->Set(-1.0);
 		}
-	} else
-	{
-		leftLeadscrew->Set(0);
-		leftIsThere = true;
-		return leftIsThere;
+		atsetheight=0;
+	}
+	else{
+		atsetheight=1;
+	}
+	return atsetheight;
 }
-	return leftIsThere;
-}
-bool Lift::RightLiftSpeed(float speed){        // Controls the speed of the right leadscrew for the lift
-	currentrightheight = GetRightHeight();
-	rightIsThere = rightlift_limit->Get();
-	if(speed > 0.0)
-	{
-		if ( currentrightheight > 1.95 ||rightIsThere==true)
-		{
-			rightLeadscrew->Set(0);
-			rightIsThere = true;
-		} else
-		{
-			rightLeadscrew->Set(speed);
-			rightIsThere = false;
+bool Lift::SetRightLiftHeight(float setrightheight){
+	rightLiftHeight=GetRightHeight();
+	bool atsetheight =0;
+	if(rightLiftHeight!=setrightheight && rightlifttop_limit == 0 && rightliftbot_limit == 0){
+		if(rightLiftHeight<setrightheight){
+			rightLeadscrew->Set(1.0);
 		}
-
-	} else if (speed < 0.0)
-	{
-		if( currentrightheight <.3)
-		{
-			rightLeadscrew->Set(0);
-			rightIsThere = true;
-		} else
-		{
-			rightLeadscrew->Set(speed);
-			rightIsThere = false;
+		else{
+			rightLeadscrew->Set(-1.0);
 		}
-	} else
-	{
-		rightLeadscrew->Set(0);
-		rightIsThere = true;	}
-		return rightIsThere;
+		atsetheight=0;
+	}
+	else{
+		atsetheight=1;
+	}
+	return atsetheight;
 }
 
+void Lift::LiftLevel(){					//Checks if the right lift is level with the left lift and if not sets them to be equal
+	leftLiftHeight = GetLeftHeight();
+	rightLiftHeight = GetRightHeight();
+	leftTopIsThere = leftlifttop_limit->Get();
+	leftBotIsThere = leftliftbot_limit->Get();
+	rightTopIsThere = rightlifttop_limit->Get();
+	rightBotIsThere = rightliftbot_limit->Get();
+	if (leftLiftHeight != rightLiftHeight){		//if the left lift doesn't equal the right lift
+		liftLevel=false;
+	}
+	else if(leftTopIsThere == true && rightTopIsThere != true){	//then if the left top limit is toggled and the right top is not, return false
+		liftLevel = false;
+	}
+	else if(leftBotIsThere == true && rightBotIsThere != true){ //else if the left bottom limit is toggled nad the right is not, return false
+			liftLevel = false;
+		}
+	else if(rightTopIsThere == true && leftTopIsThere == true){ //else if both of the top limits are toggled return true
+		liftLevel = true;
+	}
+	else if(leftBotIsThere == true && rightBotIsThere == true){ //else if both of the bottom limits are toggled return true
+			liftLevel = true;
+		}
+	else if(leftliftheight == rightliftheight){ //else if the potentiometer values are equal return true
+				liftLevel = true;
+			}
+	else if(leftliftheight != rightliftheight){ //else if the potentiometer values are different return false
+					liftLevel = false;
+				}
+	else{
+		liftLevel = true; //else return true
+	}
+	if(liftLevel != true){ //if the lift is not level, set the left lift to the same height as the right lift
+		SetLeftLiftHeight(rightLiftHeight);
+	}
+	liftLevel = true; //then return true
+}
 float Lift::GetLeftHeight() {
-	leftliftheight = leftlift_pot->GetVoltage();     //Returns the height of the Lift
+	leftliftheight = leftlift_pot->GetVoltage();     //Returns the height of the left lift
 	return leftliftheight;
 }
 float Lift::GetRightHeight(){
-	rightliftheight = rightlift_pot->GetVoltage();
+	rightliftheight = rightlift_pot->GetVoltage();	//Returns the height of the right lift
 	return rightliftheight;
-}
-bool Lift::SetLeftLiftHeight(float setleftheight){ //Sets the height of the lift by comparing it to that
-	bool limited;
-	currentleftheight = GetLeftHeight();            //of the current lift height
-	if (currentleftheight  < setleftheight - threshold) {        //Know which direction is up
-		limited = LeftLiftSpeed(.4);
-		return limited;
-	} else if (currentleftheight > setleftheight + threshold ) {  //If the height is below
-		limited = LeftLiftSpeed(-.6);
-		return limited;
-	} else {
-		LeftLiftSpeed(0);
-		return true;
-	}
-}
-bool Lift::SetRightLiftHeight(float setrightheight){ //Sets the height of the lift by comparing it to that
-	bool limited;
-	currentrightheight = GetRightHeight();            //of the current lift height
-	if (currentrightheight  < setrightheight - threshold) {        //Know which direction is up
-		limited = RightLiftSpeed(.4);
-		return limited;
-	} else if (currentrightheight > setrightheight + threshold ) {  //If the height is below
-		limited = RightLiftSpeed(-.6);
-		return limited;
-	} else {
-		RightLiftSpeed(0);
-		return true;
-	}
-}
-void Lift::LiftLevel(){
-	leftLiftHeight = GetLeftHeight();
-	rightLiftHeight = GetRightHeight();
-	leftIsThere = leftlift_limit->Get();
-	rightIsThere = rightlift_limit->Get();
-	if (leftLiftHeight ==! rightLiftHeight){
-		liftLevel=false;
-	}
-	else if(leftIsThere == true && rightIsThere ==! true){
-		liftLevel = false;
-	}
-	else if(rightIsThere == true && leftIsThere ==! true){
-		liftLevel = false;
-	}
-	if(liftLevel ==! true){
-		SetLeftLiftHeight(rightLiftHeight);
-	}
-	liftLevel = true;
 }

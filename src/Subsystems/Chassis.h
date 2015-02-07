@@ -15,10 +15,10 @@ public:
 	void InitDefaultCommand();
 	void DriveWithJoystick(Joystick *drivestick);
 	void mecanumDrive_Polar(double x, double y, double z);
-	VictorSP *frontleftm;
-	VictorSP *frontrightm;
-	VictorSP *backleftm;
-	VictorSP *backrightm;
+	CANTalon *frontleftm;
+	CANTalon *frontrightm;
+	CANTalon *backleftm;
+	CANTalon *backrightm;
 
 };
 

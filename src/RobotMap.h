@@ -33,12 +33,12 @@ static const uint32_t ch_RightLeadM = 6;
 
 
 //CAN VictorSP for Intake Wheels
-static const uint32_t ch_leftIntakeWheel = 8;
-static const uint32_t ch_rightIntakeWheel = 9;
+static const uint32_t ch_leftIntakeWheel = 7;
+static const uint32_t ch_rightIntakeWheel = 8;
 
 //Solenoid channels
-static const uint32_t ch_LeftIntake = 10;
-static const uint32_t ch_RightIntake = 11;
+static const uint32_t ch_LeftIntake = 9;
+static const uint32_t ch_RightIntake = 10;
 
 //Digital IO
 
@@ -58,12 +58,15 @@ static const uint32_t ch_rolleroutButton = 6;
 static const uint32_t ch_setdownButton = 7;
 
 //Digital IO
-static const uint32_t ch_LeftLeadLimit = 1;
-static const uint32_t ch_RightLeadLimit =2;
+static const uint32_t ch_LeftLeadTopLimit = 1;
+static const uint32_t ch_RightLeadBotLimit =2;
+static const uint32_t ch_LeftLeadBotLimit = 3;
+static const uint32_t ch_RightLeadTopLimit =4;
+
 
 //Analog IO
 static const uint32_t ch_LeftLeadscrewPot = 1;
 static const uint32_t ch_RightLeadscrewPot = 2;
-
+static const uint32_t ch_Ultrasonic =3;
 
 #endif

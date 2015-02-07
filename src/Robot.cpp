@@ -8,7 +8,6 @@ class Robot: public IterativeRobot
 private:
 	Command *autonomousCommand;
 	LiveWindow *lw;
-
 	void RobotInit()
 	{
 		CommandBase::init();
@@ -29,6 +28,7 @@ private:
 
 	void AutonomousPeriodic()
 	{
+
 		Scheduler::GetInstance()->Run();
 	}
 

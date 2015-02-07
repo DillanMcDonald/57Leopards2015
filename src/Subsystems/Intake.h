@@ -16,10 +16,14 @@ public:
 	void PushOut();
 	void ClampClose();
 	void ClampOpen();
+	void AutoIntake();
+	double GetDistance();
 	Solenoid *leftIntake;
 	Solenoid *rightIntake;
-	VictorSP *leftIntakeWheel;
-	VictorSP *rightIntakeWheel;
+	CANTalon *leftIntakeWheel;
+	CANTalon *rightIntakeWheel;
+	AnalogInput *ultrasonic;
+	double distance;
 };
 
 #endif
