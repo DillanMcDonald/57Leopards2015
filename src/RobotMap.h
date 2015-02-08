@@ -21,10 +21,10 @@
 //const int RANGE_FINDER_MODULE = 1;
 
 //CAN VictorSP for Chassis
-static const uint32_t ch_FrontLeftM = 1;
-static const uint32_t ch_BackLeftM = 2;
-static const uint32_t ch_BackRightM = 3;
-static const uint32_t ch_FrontRightM = 4;
+static const uint32_t ch_FrontLeftM = 3;
+static const uint32_t ch_BackLeftM = 4;
+static const uint32_t ch_BackRightM = 1;
+static const uint32_t ch_FrontRightM = 2;
 
 
 //CAN VictorSP for Leadscrew
@@ -37,12 +37,9 @@ static const uint32_t ch_leftIntakeWheel = 7;
 static const uint32_t ch_rightIntakeWheel = 8;
 
 //Solenoid channels
-static const uint32_t ch_LeftIntake = 9;
-static const uint32_t ch_RightIntake = 10;
-
-//Digital IO
-
-//Analog IO
+static const uint32_t ch_Compressor = 0;
+static const uint32_t ch_LeftIntake = 1;
+static const uint32_t ch_RightIntake = 2;
 
 // Joysticks
 static const uint32_t ch_driveStick = 1;

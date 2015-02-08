@@ -8,6 +8,8 @@ Intake::Intake() :	Subsystem("Intake")
 	leftIntake = new Solenoid(ch_LeftIntake);
 	rightIntake = new Solenoid(ch_RightIntake);
 	ultrasonic = new AnalogInput(ch_Ultrasonic);
+	distance = 0;
+
 }
 
 void Intake::InitDefaultCommand()

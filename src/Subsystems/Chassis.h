@@ -14,7 +14,7 @@ public:
 	Chassis();
 	void InitDefaultCommand();
 	void DriveWithJoystick(Joystick *drivestick);
-	void mecanumDrive_Polar(double x, double y, double z);
+	void mecanumDrive(double x, double y, double z);
 	CANTalon *frontleftm;
 	CANTalon *frontrightm;
 	CANTalon *backleftm;
