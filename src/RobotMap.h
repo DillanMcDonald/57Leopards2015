@@ -29,36 +29,39 @@ static const uint32_t ch_FrontRightM = 2;
 
 //CAN VictorSP for Leadscrew
 static const uint32_t ch_LeftLeadM = 5;
-static const uint32_t ch_RightLeadM = 6;
+static const uint32_t ch_RightLeadM = 7;
 
 
 //CAN VictorSP for Intake Wheels
-static const uint32_t ch_leftIntakeWheel = 7;
+static const uint32_t ch_leftIntakeWheel = 6;
 static const uint32_t ch_rightIntakeWheel = 8;
 
 //Solenoid channels
-static const uint32_t ch_Compressor = 0;
-static const uint32_t ch_LeftIntake = 1;
-static const uint32_t ch_RightIntake = 2;
+static const uint32_t ch_Open = 0;
+static const uint32_t ch_Close = 1;
 
 // Joysticks
-static const uint32_t ch_driveStick = 1;
-static const uint32_t ch_boxingStick = 2;
+static const uint32_t ch_driveStick = 0;
+static const uint32_t ch_boxingStick = 1;
 
 //Buttons
 static const uint32_t ch_coopertitionButton= 1;
-static const uint32_t ch_intakeclampButton = 2;
-static const uint32_t ch_intakeletgoButton= 3;
+static const uint32_t ch_intakeclampButton = 1;
+static const uint32_t ch_intakeletgoButton= 2;
 static const uint32_t ch_pickupButton = 4;
 static const uint32_t ch_rollerinButton = 5;
 static const uint32_t ch_rolleroutButton = 6;
 static const uint32_t ch_setdownButton = 7;
+static const uint32_t ch_rightwheelrotate = 4;
+static const uint32_t ch_leftwheelrotate =3;
+static const uint32_t ch_LiftUp=11;
+static const uint32_t ch_LiftDown=12;
 
 //Digital IO
-static const uint32_t ch_LeftLeadTopLimit = 1;
-static const uint32_t ch_RightLeadBotLimit =2;
-static const uint32_t ch_LeftLeadBotLimit = 3;
-static const uint32_t ch_RightLeadTopLimit =4;
+static const uint32_t ch_LeftLeadTopLimit = 0;
+static const uint32_t ch_RightLeadBotLimit =3;
+static const uint32_t ch_LeftLeadBotLimit = 1;
+static const uint32_t ch_RightLeadTopLimit =2;
 
 
 //Analog IO

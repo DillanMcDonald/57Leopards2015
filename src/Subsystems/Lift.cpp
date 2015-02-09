@@ -20,7 +20,10 @@ lastLeftHeight =1;
 lastRightHeight =1;
 leftLeadscrew->SetPID(0.0,0.0,0.0,0.0);
 rightLeadscrew->SetPID(0.0,0.0,0.0,0.0);
-
+leftlifttop_limit=0;
+leftliftbot_limit=0;
+rightlifttop_limit=0;
+rightliftbot_limit=0;
 }
 
 void Lift::InitDefaultCommand()
@@ -110,4 +113,33 @@ float Lift::GetLeftHeight() {
 float Lift::GetRightHeight(){
 	rightliftheight = rightlift_pot->GetVoltage();	//Returns the height of the right lift
 	return rightliftheight;
+}
+void Lift::LiftUp(){
+	if(leftlifttop_limit != 0){
+		leftLeadscrew->Set(0);
+	}
+	else if(rightlifttop_limit != 0){
+		rightLeadscrew->Set(0);
+	}
+	else{
+		leftLeadscrew->Set(1.0);
+		rightLeadscrew->Set(1.0);
+	}
+
+}
+void Lift::LiftDown(){
+	if(leftliftbot_limit != 0){
+			leftLeadscrew->Set(0);
+		}
+		else if(rightliftbot_limit !=0){
+			rightLeadscrew->Set(0);
+		}
+		else{
+			leftLeadscrew->Set(-1.0);
+			rightLeadscrew->Set(-1.0);
+		}
+}
+void Lift::LiftStop(){
+	leftLeadscrew->Set(0);
+	rightLeadscrew->Set(0);
 }

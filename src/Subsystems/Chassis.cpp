@@ -26,22 +26,22 @@ void Chassis::DriveWithJoystick(Joystick *drivestick)
 {
 	//drive->MecanumDrive_Polar(drivestick->GetRawAxis(0), drivestick->GetRawAxis(1), drivestick->GetRawAxis(2));
 	//drive->MecanumDrive_Cartesian(drivestick->GetY(), drivestick->GetX(), drivestick->GetX(), 0);
-	double x=drivestick->GetX();
-	double y=drivestick->GetY();
+	double x=drivestick->GetY();
+	double y=drivestick->GetX();
 	double z=drivestick->GetZ();
 	//Wait(0.01);
-	frontrightm->Set(x+y-z);
-	frontleftm->Set(-(x-y+z));
-	backrightm->Set(x-y-z);
-	backleftm->Set(-(x+y+z));
+	frontrightm->Set(-(x+y+z));
+	frontleftm->Set((x+y-z));
+	backrightm->Set(-(x-y+z));
+	backleftm->Set((x-y-z));
 }
 
-void Chassis::mecanumDrive(double x, double y, double z){
+void Chassis::mecanumDrive(double y, double x, double z){
 	//drive->MecanumDrive_Cartesian(x,y,z);
 	//Wait(0.01);
-	frontrightm->Set(x+y-z);
-	frontleftm->Set(-(x-y+z));
-	backrightm->Set(x-y-z);
-	backleftm->Set(-(x+y+z));
+	frontrightm->Set(x+y+z);
+	frontleftm->Set(-(x-y-z));
+	backrightm->Set(x-y+z);
+	backleftm->Set(-(x+y-z));
 }
 

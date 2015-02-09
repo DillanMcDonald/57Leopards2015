@@ -12,26 +12,26 @@ private:
 	Command *driveCommand;
 	Command *autonomousCommand;
 	LiveWindow *lw;
-	//Compressor *c;
+	Compressor *c = new Compressor(10);
 
 	void RobotInit()
 	{
 		CommandBase::init();
 		//autonomousCommand = new exampleCommand();
 		lw = LiveWindow::GetInstance();
-		//c -> SetClosedLoopControl(true);
+		c -> SetClosedLoopControl(true);
 		//driveCommand = new Drive();
 	}
 	
 	void DisabledPeriodic()
 	{
 		Scheduler::GetInstance()->Run();
-		//c -> SetClosedLoopControl(true);
+		c -> SetClosedLoopControl(true);
 	}
 
 	void AutonomousInit()
 	{
-		//c -> SetClosedLoopControl(true);
+		c -> SetClosedLoopControl(true);
 		if (autonomousCommand != NULL)
 			autonomousCommand->Start();
 
@@ -53,6 +53,7 @@ private:
 		if (autonomousCommand != NULL)
 			autonomousCommand->Cancel();
 		//driveCommand.start();
+		c->SetClosedLoopControl(true);
 	}
 
 	void TeleopPeriodic()

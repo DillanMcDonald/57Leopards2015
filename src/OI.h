@@ -18,6 +18,10 @@ public:
 	JoystickButton *pickupButton;
 	JoystickButton *setdownButton;
 	JoystickButton *coopertitionButton;
+	JoystickButton *rightWheelRotate;
+	JoystickButton *leftWheelRotate;
+	JoystickButton *manuelLiftUp;
+	JoystickButton *manuelLiftDown;
 	Joystick *GetDriveJoystick();
 	Joystick *GetBoxingJoystick();
 };

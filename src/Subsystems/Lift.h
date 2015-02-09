@@ -44,6 +44,9 @@ public:
 	void LiftLevel();
 	float leftLiftHeight;
 	float rightLiftHeight;
+	void LiftUp();
+	void LiftDown();
+	void LiftStop();
 };
 
 #endif

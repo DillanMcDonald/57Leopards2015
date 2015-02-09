@@ -5,8 +5,8 @@ Intake::Intake() :	Subsystem("Intake")
 {
 	leftIntakeWheel = new CANTalon(ch_leftIntakeWheel);
 	rightIntakeWheel = new CANTalon(ch_rightIntakeWheel);
-	leftIntake = new Solenoid(ch_LeftIntake);
-	rightIntake = new Solenoid(ch_RightIntake);
+	intakeOpen = new Solenoid(10,ch_Open);
+	intakeClose = new Solenoid(10,ch_Close);
 	ultrasonic = new AnalogInput(ch_Ultrasonic);
 	distance = 0;
 
@@ -23,35 +23,51 @@ void Intake::InitDefaultCommand()
 void Intake::PullIn(){
 leftIntakeWheel -> Set(1.0);
 rightIntakeWheel -> Set(-1.0);
+
+}
+void Intake::LeftRotate(){
+	leftIntakeWheel -> Set(1.0);
+	rightIntakeWheel -> Set(1.0);
+
+}
+void Intake::RightRotate(){
+	leftIntakeWheel -> Set(-1.0);
+	rightIntakeWheel -> Set(-1.0);
+
 }
 void Intake::PushOut(){
 leftIntakeWheel -> Set(-1.0);
 rightIntakeWheel -> Set(1.0);
 }
 void Intake::ClampClose(){
-leftIntake -> Set(true);
-rightIntake -> Set(true);
+intakeClose->Set(true);
+intakeOpen->Set(false);
+}
+void Intake::RollerStop(){
+leftIntakeWheel -> Set(0);
+rightIntakeWheel -> Set(0);
+
 }
 void Intake::ClampOpen(){
-leftIntake -> Set(false);
-rightIntake -> Set(false);
+intakeOpen->Set(true);
+intakeClose->Set(false);
 }
-void Intake::AutoIntake(){
+/*void Intake::AutoIntake(){
 if(GetDistance()>2.5){
-leftIntake -> Set(true);
-rightIntake -> Set(true);
+openIntake -> Set(true);
+closeIntake -> Set(false);
 leftIntakeWheel -> Set(1.0);
 rightIntakeWheel -> Set(-1.0);
 }
 else if(GetDistance()<=2 && GetDistance()>=2.5){	//These Values need to be just when the box gets to the wheel
-leftIntake -> Set(true);
-rightIntake -> Set(true);
+openIntake -> Set(false);
+closeIntake -> Set(true);
 leftIntakeWheel -> Set(1.0);
 rightIntakeWheel -> Set(-1.0);
 }
 else{
-leftIntake -> Set(false);
-rightIntake -> Set(false);
+openIntake -> Set(true);
+closeIntake -> Set(false);
 leftIntakeWheel -> Set(0);
 rightIntakeWheel -> Set(0);
 }
@@ -61,3 +77,4 @@ double Intake::GetDistance(){
 	distance = ((rawdistance/.0124))/12;
 	return distance;
 }
+*/

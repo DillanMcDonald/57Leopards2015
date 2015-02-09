@@ -17,13 +17,16 @@ public:
 	void ClampClose();
 	void ClampOpen();
 	void AutoIntake();
+	void RollerStop();
 	double GetDistance();
-	Solenoid *leftIntake;
-	Solenoid *rightIntake;
+	Solenoid *intakeOpen;
+	Solenoid *intakeClose;
 	CANTalon *leftIntakeWheel;
 	CANTalon *rightIntakeWheel;
 	AnalogInput *ultrasonic;
 	double distance;
+	void LeftRotate();
+	void RightRotate();
 };
 
 #endif
