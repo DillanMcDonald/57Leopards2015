@@ -13,6 +13,7 @@
 #include "Commands/LiftManuelUp.h"
 #include "Commands/LiftManuelDown.h"
 #include "Commands/LiftStop.h"
+#include "Commands/JoystickIntake.h"
 #include "RobotMap.h"
 
 OI::OI()
@@ -22,8 +23,7 @@ OI::OI()
 	boxingStick = new Joystick(ch_boxingStick);
 	rollerinButton = new JoystickButton(driveStick, ch_rollerinButton);
 	rolleroutButton = new JoystickButton(driveStick, ch_rolleroutButton);
-	intakeclampButton = new JoystickButton(driveStick, ch_intakeclampButton);
-	intakeletgoButton = new JoystickButton(driveStick, ch_intakeletgoButton);
+	intakeclampButton = new JoystickButton(boxingStick, ch_intakeclampButton);
 	pickupButton = new JoystickButton(boxingStick, ch_pickupButton);
 	setdownButton = new JoystickButton(boxingStick, ch_setdownButton);
 	coopertitionButton = new JoystickButton(boxingStick, ch_coopertitionButton);
@@ -38,7 +38,7 @@ OI::OI()
 	rolleroutButton -> WhenPressed(new Outtake());
 	rolleroutButton -> WhenReleased(new RollerStop());
 	intakeclampButton -> WhenPressed(new Close_Intake());
-	intakeletgoButton -> WhenReleased(new Open_Intake());
+	intakeclampButton -> WhenReleased(new Open_Intake());
 	pickupButton -> WhenPressed(new Lift_Up());
 	setdownButton -> WhenPressed(new Lift_Down());
 	coopertitionButton -> WhenPressed(new Coopertition_Setpoint());
