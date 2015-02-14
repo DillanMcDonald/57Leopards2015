@@ -20,18 +20,13 @@ void Intake::InitDefaultCommand()
 
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
-void Intake::BoxRotate(Joystick *boxingstick){
-
-	double y=boxingstick->GetX();
-	leftIntakeWheel -> Set(y);
-	rightIntakeWheel -> Set(-y);
-}
-void Intake::BoxIntake(Joystick *boxingstick){
+void Intake::BoxJoystick(Joystick *boxingstick){
 	double x=boxingstick->GetY();
+	double y=boxingstick->GetX();
 	leftIntakeWheel -> Set(x);
-	rightIntakeWheel -> Set(-x);
-
+	rightIntakeWheel -> Set(x);
 }
+
 void Intake::PullIn(){
 leftIntakeWheel -> Set(1.0);
 rightIntakeWheel -> Set(-1.0);

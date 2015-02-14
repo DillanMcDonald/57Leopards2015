@@ -27,8 +27,7 @@ public:
 	double distance;
 	void LeftRotate();
 	void RightRotate();
-	void BoxRotate(Joystick *boxingstick);
-	void BoxIntake(Joystick *boxingstick);
+	void BoxJoystick(Joystick *boxingstick);
 };
 
 #endif

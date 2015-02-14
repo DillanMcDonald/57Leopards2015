@@ -16,8 +16,7 @@ void JoystickIntake::Initialize()
 // Called repeatedly when this Command is scheduled to run
 void JoystickIntake::Execute()
 {
-	intake->BoxIntake(oi->GetBoxingJoystick());
-	intake->BoxRotate(oi->GetBoxingJoystick());
+	intake->BoxJoystick(oi->GetBoxingJoystick());
 }
 
 // Make this return true when this Command no longer needs to run execute()

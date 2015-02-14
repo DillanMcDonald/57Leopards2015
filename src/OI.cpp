@@ -21,16 +21,16 @@ OI::OI()
 	// Process operator interface input here.
 	driveStick = new Joystick(ch_driveStick);
 	boxingStick = new Joystick(ch_boxingStick);
-	rollerinButton = new JoystickButton(driveStick, ch_rollerinButton);
-	rolleroutButton = new JoystickButton(driveStick, ch_rolleroutButton);
+	rollerinButton = new JoystickButton(boxingStick, ch_rollerinButton);
+	rolleroutButton = new JoystickButton(boxingStick, ch_rolleroutButton);
 	intakeclampButton = new JoystickButton(boxingStick, ch_intakeclampButton);
-	pickupButton = new JoystickButton(boxingStick, ch_pickupButton);
-	setdownButton = new JoystickButton(boxingStick, ch_setdownButton);
-	coopertitionButton = new JoystickButton(boxingStick, ch_coopertitionButton);
-	rightWheelRotate = new JoystickButton(driveStick, ch_rightwheelrotate);
-	leftWheelRotate = new JoystickButton(driveStick, ch_leftwheelrotate);
-	manuelLiftUp = new JoystickButton(driveStick, ch_LiftUp);
-	manuelLiftDown = new JoystickButton(driveStick, ch_LiftDown);
+	//pickupButton = new JoystickButton(boxingStick, ch_pickupButton);
+	//setdownButton = new JoystickButton(boxingStick, ch_setdownButton);
+	//coopertitionButton = new JoystickButton(boxingStick, ch_coopertitionButton);
+	rightWheelRotate = new JoystickButton(boxingStick, ch_rightwheelrotate);
+	leftWheelRotate = new JoystickButton(boxingStick, ch_leftwheelrotate);
+	manuelLiftUp = new JoystickButton(boxingStick, ch_LiftUp);
+	manuelLiftDown = new JoystickButton(boxingStick, ch_LiftDown);
 
 	//set the buttons to commands
 	rollerinButton -> WhenPressed(new IntakeCommand());
@@ -39,9 +39,9 @@ OI::OI()
 	rolleroutButton -> WhenReleased(new RollerStop());
 	intakeclampButton -> WhenPressed(new Close_Intake());
 	intakeclampButton -> WhenReleased(new Open_Intake());
-	pickupButton -> WhenPressed(new Lift_Up());
-	setdownButton -> WhenPressed(new Lift_Down());
-	coopertitionButton -> WhenPressed(new Coopertition_Setpoint());
+	//pickupButton -> WhenPressed(new Lift_Up());
+	//setdownButton -> WhenPressed(new Lift_Down());
+	//coopertitionButton -> WhenPressed(new Coopertition_Setpoint());
 	rightWheelRotate-> WhenPressed(new RightRotateWheel());
 	rightWheelRotate-> WhenReleased(new RollerStop());
 	leftWheelRotate-> WhenPressed(new LeftRotateWheel());

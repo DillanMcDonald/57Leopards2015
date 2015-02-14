@@ -47,6 +47,10 @@ public:
 	void LiftUp();
 	void LiftDown();
 	void LiftStop();
+	bool lb;
+	bool lt;
+	bool rb;
+	bool rt;
 };
 
 #endif
