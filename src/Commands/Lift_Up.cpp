@@ -10,20 +10,20 @@ Lift_Up::Lift_Up()
 // Called just before this Command runs the first time
 void Lift_Up::Initialize()
 {
-
+	lift->EnablePID();
 }
 
 // Called repeatedly when this Command is scheduled to run
 void Lift_Up::Execute()
 {
-	lift->SetLeftLiftHeight(3.0);
-	lift->SetRightLiftHeight(3.0);
+
+	lift->PIDUp((((oi->GetBoxingJoystick())->GetZ())+1)/20);
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool Lift_Up::IsFinished()
 {
-	return false;
+	return lift->OnTarget();
 }
 
 // Called once after isFinished returns true

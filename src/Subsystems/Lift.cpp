@@ -211,13 +211,19 @@ void Lift::DisablePID(){
  */
 bool Lift::SetTarget(double target, double rate){
 	double inc = target - curSetpoint;
+	lb = leftliftbot_limit->Get();
+	rb = rightliftbot_limit->Get();
 	if (fabs(inc) <= rate)
 	{
 		curSetpoint = target;
 		incSetpoint = 0;
 	}
-	else
-	{
+	/*else if((lb == 1 || rb==1)||(lb==1 && rb==1)){
+		if(target<curSetpoint){
+			target = curSetpoint;
+		}
+	}*/
+	else{
 		incSetpoint = inc;
 		curSetpoint += (inc < 0) ? -rate : rate;
 	}
@@ -225,6 +231,7 @@ bool Lift::SetTarget(double target, double rate){
 	leftPID->SetSetpoint(curSetpoint + kLeftOff);
 	rightPID->SetSetpoint(curSetpoint + kRightOff);
 	return OnTarget();
+	printLiftValues();
 }
 
 bool Lift::OnTarget(){
@@ -239,6 +246,7 @@ bool Lift::OnTarget(){
  */
 void Lift::PIDUp(double rate){
 	SetTarget(curSetpoint + rate);
+	printLiftValues();
 }
 
 /**
@@ -248,6 +256,7 @@ void Lift::PIDUp(double rate){
  */
 void Lift::PIDDown(double rate){
 	SetTarget(curSetpoint - rate);
+	printLiftValues();
 }
 
 void Lift::printLiftValues(void){

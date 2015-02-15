@@ -6,17 +6,17 @@
 
 
 static const double kLiftBottom = 0.05;  //~Bottom of lift
-static const double kLiftTop = 2.15;  //~Top of lift
+static const double kLiftTop = 2.454;  //~Top of lift
 static const double kLiftStackIn = 0.61;  //Height for intake of already stacked boxes
 
-static const double kRightOff = 0.140;
-static const double kLeftOff = 1.015;
+static const double kRightOff = 0.787;
+static const double kLeftOff = 1.678;
 static const float kLeftP = 8;
 static const float kLeftI = 0;
-static const float kLeftD = 10;
+static const float kLeftD = 1;
 static const float kRightP = 8;
 static const float kRightI = 0;
-static const float kRightD = 10;
+static const float kRightD = 1;
 
 class Lift: public Subsystem
 {

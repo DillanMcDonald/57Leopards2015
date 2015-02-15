@@ -26,7 +26,7 @@ OI::OI()
 	intakeclampButton = new JoystickButton(boxingStick, ch_intakeclampButton);
 	//pickupButton = new JoystickButton(boxingStick, ch_pickupButton);
 	//setdownButton = new JoystickButton(boxingStick, ch_setdownButton);
-	//coopertitionButton = new JoystickButton(boxingStick, ch_coopertitionButton);
+	coopertitionButton = new JoystickButton(boxingStick, ch_coopertitionButton);
 	rightWheelRotate = new JoystickButton(boxingStick, ch_rightwheelrotate);
 	leftWheelRotate = new JoystickButton(boxingStick, ch_leftwheelrotate);
 	manuelLiftUp = new JoystickButton(boxingStick, ch_LiftUp);
@@ -35,6 +35,8 @@ OI::OI()
 	manualLeftDown = new JoystickButton(driveStick, ch_manualLeftDown);
 	manualRightUp = new JoystickButton(driveStick, ch_manualRightUp);
 	manualRightDown = new JoystickButton(driveStick, ch_manualRightDown);
+	pidliftup = new JoystickButton(boxingStick, ch_PIDLiftUp);
+	pidliftdown = new JoystickButton(boxingStick, ch_PIDLiftDown);
 
 	//set the buttons to commands
 	rollerinButton -> WhenPressed(new IntakeCommand());
@@ -43,17 +45,20 @@ OI::OI()
 	rolleroutButton -> WhenReleased(new RollerStop());
 	intakeclampButton -> WhenPressed(new Close_Intake());
 	intakeclampButton -> WhenReleased(new Open_Intake());
-	//pickupButton -> WhenPressed(new Lift_Up());
-	//setdownButton -> WhenPressed(new Lift_Down());
-	//coopertitionButton -> WhenPressed(new Coopertition_Setpoint());
+	coopertitionButton -> WhenPressed(new Coopertition_Setpoint());
 	rightWheelRotate-> WhenPressed(new RightRotateWheel());
 	rightWheelRotate-> WhenReleased(new RollerStop());
 	leftWheelRotate-> WhenPressed(new LeftRotateWheel());
 	leftWheelRotate-> WhenReleased(new RollerStop());
 	manuelLiftUp-> WhenPressed(new LiftManuelUp());
-	manuelLiftUp-> WhenReleased(new LiftStop());
+	//manuelLiftUp-> WhenReleased(new LiftStop());
 	manuelLiftDown-> WhenPressed(new LiftManuelDown());
-	manuelLiftDown-> WhenReleased(new LiftStop());
+	//manuelLiftDown-> WhenReleased(new LiftStop());
+	pidliftup-> WhenPressed(new Lift_Up());
+	pidliftup-> WhenReleased(new LiftStop());
+	pidliftdown-> WhenPressed(new Lift_Down());
+	pidliftdown-> WhenReleased(new LiftStop());
+
 	/*manualLeftUp->WhenPressed(new LeftLiftUp());
 	manualLeftUp->WhenReleased(new LiftStop());
 	manualLeftDown->WhenPressed(new LeftLiftDown());

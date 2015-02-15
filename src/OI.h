@@ -26,6 +26,8 @@ public:
 	JoystickButton *manualLeftDown;
 	JoystickButton *manualRightUp;
 	JoystickButton *manualRightDown;
+	JoystickButton *pidliftup;
+	JoystickButton *pidliftdown;
 	Joystick *GetDriveJoystick();
 	Joystick *GetBoxingJoystick();
 };

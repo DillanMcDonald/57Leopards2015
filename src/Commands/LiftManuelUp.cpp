@@ -10,19 +10,19 @@ LiftManuelUp::LiftManuelUp()
 // Called just before this Command runs the first time
 void LiftManuelUp::Initialize()
 {
-
+	lift->EnablePID();
 }
 
 // Called repeatedly when this Command is scheduled to run
 void LiftManuelUp::Execute()
 {
-	lift->LiftUp();
+	lift->SetTarget(2.12, .2);
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool LiftManuelUp::IsFinished()
 {
-	return false;
+	return lift->OnTarget();
 }
 
 // Called once after isFinished returns true

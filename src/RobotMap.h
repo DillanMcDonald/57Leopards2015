@@ -58,9 +58,11 @@ static const uint32_t ch_rightwheelrotate = 4;
 static const uint32_t ch_leftwheelrotate =5;
 static const uint32_t ch_LiftUp=6;
 static const uint32_t ch_LiftDown=7;
-
+static const uint32_t ch_coopertitionButton= 8;
+static const uint32_t ch_PIDLiftDown = 10;
+static const uint32_t ch_PIDLiftUp = 11;
 //unused channel designators
-static const uint32_t ch_coopertitionButton= 1;
+
 static const uint32_t ch_intakeletgoButton= 2;
 static const uint32_t ch_pickupButton = 4;
 static const uint32_t ch_setdownButton = 7;
