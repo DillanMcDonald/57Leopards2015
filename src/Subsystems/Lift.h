@@ -2,6 +2,21 @@
 #define Lift_H
 
 #include "WPILib.h"
+#include "PIDController.h"
+
+
+static const double kLiftBottom = 0.05;  //~Bottom of lift
+static const double kLiftTop = 2.15;  //~Top of lift
+static const double kLiftStackIn = 0.61;  //Height for intake of already stacked boxes
+
+static const double kRightOff = 0.140;
+static const double kLeftOff = 1.015;
+static const float kLeftP = 8;
+static const float kLeftI = 0;
+static const float kLeftD = 10;
+static const float kRightP = 8;
+static const float kRightI = 0;
+static const float kRightD = 10;
 
 class Lift: public Subsystem
 {
@@ -11,14 +26,15 @@ private:
 	 float leftliftheight;
 	 float rightliftheight;
 	 bool isSet;
+	 double curSetpoint, incSetpoint;
 	double lastLeftHeight, lastRightHeight, leftMotorOut, rightMotorOut,threshold;
+	void printLiftValues(void);
 public:
 	Lift();
 	void InitDefaultCommand();
 	CANTalon *leftLeadscrew;
 	CANTalon *rightLeadscrew;
-	double ReturnPIDInput();
-	void UsePIDOutput(double output);
+	PIDController *leftPID, *rightPID;
 	bool LeftLiftSpeed(float speed);
 	bool RightLiftSpeed(float speed);
 	float GetLeftHeight();
@@ -44,9 +60,19 @@ public:
 	void LiftLevel();
 	float leftLiftHeight;
 	float rightLiftHeight;
+	void EnablePID();
+	void DisablePID();
+	bool SetTarget(double target, double rate = 5);
+	bool OnTarget();
+	void PIDUp(double rate = 0.015);
+	void PIDDown(double rate = 0.015);
 	void LiftUp();
 	void LiftDown();
 	void LiftStop();
+	void RightLiftUp();
+	void RightLiftDown();
+	void LeftLiftUp();
+	void LeftLiftDown();
 	bool lb;
 	bool lt;
 	bool rb;

@@ -7,7 +7,7 @@ leftLeadscrew= new CANTalon(ch_LeftLeadM);
 rightLeadscrew = new CANTalon(ch_RightLeadM);
 leftlift_pot = new AnalogInput(ch_LeftLeadscrewPot);
 rightlift_pot = new AnalogInput(ch_RightLeadscrewPot);
-threshold = .02;
+threshold = .04;
 leftlifttop_limit  = new DigitalInput(ch_LeftLeadTopLimit);
 leftliftbot_limit  = new DigitalInput(ch_LeftLeadBotLimit);
 rightlifttop_limit  = new DigitalInput(ch_RightLeadTopLimit);
@@ -16,6 +16,10 @@ leftTopIsThere = false;
 rightTopIsThere = false;
 leftBotIsThere = false;
 rightBotIsThere = false;
+leftPID = new PIDController(kLeftP, kLeftI, kLeftD, leftlift_pot, leftLeadscrew);
+rightPID = new PIDController(kRightP, kRightI, kRightD, rightlift_pot, rightLeadscrew);
+leftPID->SetAbsoluteTolerance(threshold);
+rightPID->SetAbsoluteTolerance(threshold);
 lastLeftHeight =1;
 lastRightHeight =1;
 leftLeadscrew->SetPID(0.0,0.0,0.0,0.0);
@@ -130,6 +134,7 @@ void Lift::LiftUp(){
 		leftLeadscrew->Set(1.0);
 		rightLeadscrew->Set(1.0);
 	}
+	printLiftValues();
 }
 void Lift::LiftDown(){
 	lb = leftliftbot_limit->Get();
@@ -150,8 +155,108 @@ void Lift::LiftDown(){
 		leftLeadscrew->Set(-1.0);
 		rightLeadscrew->Set(-1.0);
 	}
-	}
+	printLiftValues();
+}
+
+void Lift::RightLiftUp(){
+	rightLeadscrew->Set(0.5);
+	printLiftValues();
+}
+
+void Lift::RightLiftDown(){
+	rightLeadscrew->Set(-0.5);
+	printLiftValues();
+}
+
+void Lift::LeftLiftUp(){
+	rightLeadscrew->Set(0.5);
+	printLiftValues();
+}
+
+void Lift::LeftLiftDown(){
+	rightLeadscrew->Set(-0.5);
+	printLiftValues();
+}
+
 void Lift::LiftStop(){
 	leftLeadscrew->Set(0);
 	rightLeadscrew->Set(0);
+	printLiftValues();
 }
+
+void Lift::EnablePID(){
+	double lv, rv, av;
+	lv = leftlift_pot->PIDGet() - kLeftOff;
+	rv = rightlift_pot->PIDGet() - kRightOff;
+	av = (lv + rv) / 2;
+	SetTarget(av);
+	leftPID->Enable();
+	rightPID->Enable();
+	return;
+}
+
+void Lift::DisablePID(){
+	leftPID->Disable();
+	rightPID->Disable();
+	leftLeadscrew->Set(0.0);
+	rightLeadscrew->Set(0.0);
+	incSetpoint = 0;
+	return;
+}
+
+/**
+ * Set the setpoint for the Lift PID system
+ * @param target the desired setpoint
+ * @param rate change from previous setpoint will be limited to this value.  Default 5 (instant)
+ */
+bool Lift::SetTarget(double target, double rate){
+	double inc = target - curSetpoint;
+	if (fabs(inc) <= rate)
+	{
+		curSetpoint = target;
+		incSetpoint = 0;
+	}
+	else
+	{
+		incSetpoint = inc;
+		curSetpoint += (inc < 0) ? -rate : rate;
+	}
+
+	leftPID->SetSetpoint(curSetpoint + kLeftOff);
+	rightPID->SetSetpoint(curSetpoint + kRightOff);
+	return OnTarget();
+}
+
+bool Lift::OnTarget(){
+	return ((incSetpoint == 0) && leftPID->OnTarget() && rightPID->OnTarget());
+}
+
+
+/**
+ * Bump the Lift setpoint up a specific amount.  Call repeatedly for smooth
+ * motion upwards while PID enabled
+ * @param rate amount to increase setpoint by
+ */
+void Lift::PIDUp(double rate){
+	SetTarget(curSetpoint + rate);
+}
+
+/**
+ * Bump the Lift setpoint dowb a specific amount.  Call repeatedly for smooth
+ * motion upwards while PID enabled
+ * @param rate amount to decrease setpoint by
+ */
+void Lift::PIDDown(double rate){
+	SetTarget(curSetpoint - rate);
+}
+
+void Lift::printLiftValues(void){
+	SmartDashboard::PutNumber("Left Lift Position", leftlift_pot->PIDGet());
+	SmartDashboard::PutNumber("Right Lift Position", rightlift_pot->PIDGet());
+	SmartDashboard::PutBoolean("Left Limit Top", leftlifttop_limit->Get());
+	SmartDashboard::PutBoolean("Left Limit Bottom", leftliftbot_limit->Get());
+	SmartDashboard::PutBoolean("Right Limit Top", rightlifttop_limit->Get());
+	SmartDashboard::PutBoolean("Right Limit Bottom", rightliftbot_limit->Get());
+}
+
+

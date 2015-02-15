@@ -44,18 +44,26 @@ static const uint32_t ch_Close = 0;
 static const uint32_t ch_driveStick = 0;
 static const uint32_t ch_boxingStick = 1;
 
-//Buttons
-static const uint32_t ch_coopertitionButton= 1;
+//Buttons on the Drive Joystick
+static const uint32_t ch_manualLeftUp = 7;
+static const uint32_t ch_manualLeftDown = 9;
+static const uint32_t ch_manualRightUp = 8;
+static const uint32_t ch_manualRightDown = 10;
+
+//Buttons on the Manipulator Joystick
 static const uint32_t ch_intakeclampButton = 1;
-static const uint32_t ch_intakeletgoButton= 2;
-static const uint32_t ch_pickupButton = 4;
-static const uint32_t ch_rollerinButton = 3;
 static const uint32_t ch_rolleroutButton = 2;
-static const uint32_t ch_setdownButton = 7;
+static const uint32_t ch_rollerinButton = 3;
 static const uint32_t ch_rightwheelrotate = 4;
 static const uint32_t ch_leftwheelrotate =5;
 static const uint32_t ch_LiftUp=6;
 static const uint32_t ch_LiftDown=7;
+
+//unused channel designators
+static const uint32_t ch_coopertitionButton= 1;
+static const uint32_t ch_intakeletgoButton= 2;
+static const uint32_t ch_pickupButton = 4;
+static const uint32_t ch_setdownButton = 7;
 
 //Digital IO
 static const uint32_t ch_LeftLeadTopLimit = 1;

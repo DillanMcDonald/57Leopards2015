@@ -31,6 +31,10 @@ OI::OI()
 	leftWheelRotate = new JoystickButton(boxingStick, ch_leftwheelrotate);
 	manuelLiftUp = new JoystickButton(boxingStick, ch_LiftUp);
 	manuelLiftDown = new JoystickButton(boxingStick, ch_LiftDown);
+	manualLeftUp = new JoystickButton(driveStick, ch_manualLeftUp);
+	manualLeftDown = new JoystickButton(driveStick, ch_manualLeftDown);
+	manualRightUp = new JoystickButton(driveStick, ch_manualRightUp);
+	manualRightDown = new JoystickButton(driveStick, ch_manualRightDown);
 
 	//set the buttons to commands
 	rollerinButton -> WhenPressed(new IntakeCommand());
@@ -50,6 +54,16 @@ OI::OI()
 	manuelLiftUp-> WhenReleased(new LiftStop());
 	manuelLiftDown-> WhenPressed(new LiftManuelDown());
 	manuelLiftDown-> WhenReleased(new LiftStop());
+	/*manualLeftUp->WhenPressed(new LeftLiftUp());
+	manualLeftUp->WhenReleased(new LiftStop());
+	manualLeftDown->WhenPressed(new LeftLiftDown());
+	manualLeftDown->WhenReleased(new LiftStop());
+
+	manualRightUp->WhenPressed(new RightLiftUp());
+	manualRightUp->WhenReleased(new LiftStop());
+	manualRightDown->WhenPressed(new RightLiftDown());
+	manualRightDown->WhenReleased(new LiftStop())
+	*/
 
 }
 Joystick * OI::GetDriveJoystick()
