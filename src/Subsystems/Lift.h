@@ -2,21 +2,25 @@
 #define Lift_H
 
 #include "WPILib.h"
-#include "PIDController.h"
+#include "AdvPIDController.h"
 
+static const double kLiftRate = 0.05;
 
-static const double kLiftBottom = 0.05;  //~Bottom of lift
-static const double kLiftTop = 2.454;  //~Top of lift
+static const double kLiftBottom = 0.1;  //~Bottom of lift
+static const double kLiftTop = 2.4;  //~Top of lift
 static const double kLiftStackIn = 0.61;  //Height for intake of already stacked boxes
 
 static const double kRightOff = 0.787;
 static const double kLeftOff = 1.678;
-static const float kLeftP = 8;
-static const float kLeftI = 0;
-static const float kLeftD = 1;
-static const float kRightP = 8;
-static const float kRightI = 0;
-static const float kRightD = 1;
+static const float kLeftP = 10;
+static const float kLeftI = 0.5;
+static const float kLeftD = 4;
+static const float kLeftV = 0;
+static const float kRightP = 10;
+static const float kRightI = 0.5;
+static const float kRightD = 4;
+static const float kRightV = 0;
+static const float kLiftPeriod = 0.01;
 
 class Lift: public Subsystem
 {
@@ -26,15 +30,13 @@ private:
 	 float leftliftheight;
 	 float rightliftheight;
 	 bool isSet;
-	 double curSetpoint, incSetpoint;
 	double lastLeftHeight, lastRightHeight, leftMotorOut, rightMotorOut,threshold;
-	void printLiftValues(void);
 public:
 	Lift();
 	void InitDefaultCommand();
 	CANTalon *leftLeadscrew;
 	CANTalon *rightLeadscrew;
-	PIDController *leftPID, *rightPID;
+	AdvPIDController *leftPID, *rightPID;
 	bool LeftLiftSpeed(float speed);
 	bool RightLiftSpeed(float speed);
 	float GetLeftHeight();
@@ -60,12 +62,14 @@ public:
 	void LiftLevel();
 	float leftLiftHeight;
 	float rightLiftHeight;
+	bool IsPIDEnabled();
 	void EnablePID();
 	void DisablePID();
-	bool SetTarget(double target, double rate = 5);
+	bool SetTarget(double target, double rate = 100);
 	bool OnTarget();
-	void PIDUp(double rate = 0.015);
-	void PIDDown(double rate = 0.015);
+	void PIDJogUp(double rate = 0.003);
+	void PIDJogDown(double rate = 0.003);
+	void PIDJogStop();
 	void LiftUp();
 	void LiftDown();
 	void LiftStop();
@@ -73,6 +77,7 @@ public:
 	void RightLiftDown();
 	void LeftLiftUp();
 	void LeftLiftDown();
+	void printLiftValues(void);
 	bool lb;
 	bool lt;
 	bool rb;

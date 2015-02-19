@@ -5,10 +5,13 @@
 #include "Commands/Drive.h"
 #include "RobotMap.h"
 
+static const int reportRate=4;
+
 
 class Robot: public IterativeRobot
 {
 private:
+	int cnt;
 	Command *driveCommand;
 	Command *autonomousCommand;
 	LiveWindow *lw;
@@ -18,6 +21,7 @@ private:
 	IMAQdxError imaqError;
 	void RobotInit() override {
 		CommandBase::init();
+		cnt = 0;
 		//autonomousCommand = new exampleCommand();
 		//lw = LiveWindow::GetInstance();
 		c -> SetClosedLoopControl(true);
@@ -51,8 +55,11 @@ private:
 
 	void AutonomousPeriodic() override
 	{
-		CommandBase::chassis->mecanumDrive(1,0,0);
 		Scheduler::GetInstance()->Run();
+		if ((++cnt)%reportRate == 0)
+		{
+			CommandBase::lift->printLiftValues();
+		}
 	}
 
 	void TeleopInit() override
@@ -77,7 +84,10 @@ private:
 				imaqDrawShapeOnImage(frame, frame, { 10, 10, 100, 100 }, DrawMode::IMAQ_DRAW_VALUE, ShapeMode::IMAQ_SHAPE_OVAL, 0.0f);
 				CameraServer::GetInstance()->SetImage(frame);
 			}
-			Wait(0.005);
+//			if ((++cnt)%reportRate == 0)
+			{
+				CommandBase::lift->printLiftValues();
+			}
 	}
 
 	void TestPeriodic() override

@@ -1,17 +1,18 @@
+#include <Commands/LiftBottom.h>
+#include <Commands/LiftCoopertition.h>
+#include <Commands/LiftJogDown.h>
+#include <Commands/LiftJogStop.h>
+#include <Commands/LiftJogUp.h>
+#include <Commands/LiftTop.h>
 #include "OI.h"
 #include "Commands/Close_Intake.h"
-#include "Commands/Coopertition_Setpoint.h"
 #include "Commands/Drive.h"
 #include "Commands/IntakeCommand.h"
-#include "Commands/Lift_Down.h"
-#include "Commands/Lift_Up.h"
 #include "Commands/Open_Intake.h"
 #include "Commands/Outtake.h"
 #include "Commands/RollerStop.h"
 #include "Commands/LeftRotateWheel.h"
 #include "Commands/RightRotateWheel.h"
-#include "Commands/LiftManuelUp.h"
-#include "Commands/LiftManuelDown.h"
 #include "Commands/LiftStop.h"
 #include "Commands/JoystickIntake.h"
 #include "RobotMap.h"
@@ -29,14 +30,14 @@ OI::OI()
 	coopertitionButton = new JoystickButton(boxingStick, ch_coopertitionButton);
 	rightWheelRotate = new JoystickButton(boxingStick, ch_rightwheelrotate);
 	leftWheelRotate = new JoystickButton(boxingStick, ch_leftwheelrotate);
-	manuelLiftUp = new JoystickButton(boxingStick, ch_LiftUp);
-	manuelLiftDown = new JoystickButton(boxingStick, ch_LiftDown);
+	liftTop = new JoystickButton(boxingStick, ch_LiftUp);
+	liftBottom = new JoystickButton(boxingStick, ch_LiftDown);
 	manualLeftUp = new JoystickButton(driveStick, ch_manualLeftUp);
 	manualLeftDown = new JoystickButton(driveStick, ch_manualLeftDown);
 	manualRightUp = new JoystickButton(driveStick, ch_manualRightUp);
 	manualRightDown = new JoystickButton(driveStick, ch_manualRightDown);
-	pidliftup = new JoystickButton(boxingStick, ch_PIDLiftUp);
-	pidliftdown = new JoystickButton(boxingStick, ch_PIDLiftDown);
+	jogliftup = new JoystickButton(boxingStick, ch_PIDLiftUp);
+	jogliftdown = new JoystickButton(boxingStick, ch_PIDLiftDown);
 
 	//set the buttons to commands
 	rollerinButton -> WhenPressed(new IntakeCommand());
@@ -45,19 +46,19 @@ OI::OI()
 	rolleroutButton -> WhenReleased(new RollerStop());
 	intakeclampButton -> WhenPressed(new Close_Intake());
 	intakeclampButton -> WhenReleased(new Open_Intake());
-	coopertitionButton -> WhenPressed(new Coopertition_Setpoint());
+	coopertitionButton -> WhenPressed(new LiftCoopertition());
 	rightWheelRotate-> WhenPressed(new RightRotateWheel());
 	rightWheelRotate-> WhenReleased(new RollerStop());
 	leftWheelRotate-> WhenPressed(new LeftRotateWheel());
 	leftWheelRotate-> WhenReleased(new RollerStop());
-	manuelLiftUp-> WhenPressed(new LiftManuelUp());
-	//manuelLiftUp-> WhenReleased(new LiftStop());
-	manuelLiftDown-> WhenPressed(new LiftManuelDown());
-	//manuelLiftDown-> WhenReleased(new LiftStop());
-	pidliftup-> WhenPressed(new Lift_Up());
-	pidliftup-> WhenReleased(new LiftStop());
-	pidliftdown-> WhenPressed(new Lift_Down());
-	pidliftdown-> WhenReleased(new LiftStop());
+	liftTop-> WhenPressed(new LiftTop());
+	//manuelLiftUp-> WhenReleased(new Lift_PIDStop());
+	liftBottom-> WhenPressed(new LiftBottom());
+	//manuelLiftDown-> WhenReleased(new Lift_PIDStop());
+	jogliftup-> WhenPressed(new LiftJogUp());
+	jogliftup-> WhenReleased(new LiftJogStop());
+	jogliftdown-> WhenPressed(new LiftJogDown());
+	jogliftdown-> WhenReleased(new LiftJogStop());
 
 	/*manualLeftUp->WhenPressed(new LeftLiftUp());
 	manualLeftUp->WhenReleased(new LiftStop());
