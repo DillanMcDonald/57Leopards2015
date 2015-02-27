@@ -36,6 +36,10 @@ public:
 	void InitDefaultCommand();
 	CANTalon *leftLeadscrew;
 	CANTalon *rightLeadscrew;
+	Solenoid *leftClamp;
+	Solenoid *rightClamp;
+	void ClampOn();
+	void ClampOff();
 	AdvPIDController *leftPID, *rightPID;
 	bool LeftLiftSpeed(float speed);
 	bool RightLiftSpeed(float speed);

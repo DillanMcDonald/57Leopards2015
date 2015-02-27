@@ -15,6 +15,13 @@
 #include "Commands/RightRotateWheel.h"
 #include "Commands/LiftStop.h"
 #include "Commands/JoystickIntake.h"
+#include "Commands/ToteClamp.h"
+#include "Commands/ToteUnClamp.h"
+#include "Commands/ClampBuddies.h"
+#include "Commands/UnClampBuddies.h"
+#include "Commands/UnClampDuringLift.h"
+#include "Commands/LiftManuelUp.h"
+#include "Commands/LiftManuelDown.h"
 #include "RobotMap.h"
 
 OI::OI()
@@ -38,27 +45,32 @@ OI::OI()
 	manualRightDown = new JoystickButton(driveStick, ch_manualRightDown);
 	jogliftup = new JoystickButton(boxingStick, ch_PIDLiftUp);
 	jogliftdown = new JoystickButton(boxingStick, ch_PIDLiftDown);
+	toteClamp = new JoystickButton(boxingStick, ch_ToteClamp);
 
 	//set the buttons to commands
 	rollerinButton -> WhenPressed(new IntakeCommand());
 	rollerinButton -> WhenReleased(new RollerStop());
 	rolleroutButton -> WhenPressed(new Outtake());
 	rolleroutButton -> WhenReleased(new RollerStop());
-	intakeclampButton -> WhenPressed(new Close_Intake());
-	intakeclampButton -> WhenReleased(new Open_Intake());
+	intakeclampButton -> WhenPressed(new ClampBuddies());
+	intakeclampButton -> WhenReleased(new UnClampBuddies());
 	coopertitionButton -> WhenPressed(new LiftCoopertition());
 	rightWheelRotate-> WhenPressed(new RightRotateWheel());
 	rightWheelRotate-> WhenReleased(new RollerStop());
 	leftWheelRotate-> WhenPressed(new LeftRotateWheel());
 	leftWheelRotate-> WhenReleased(new RollerStop());
-	liftTop-> WhenPressed(new LiftTop());
+	//liftTop-> WhenPressed(new LiftTop());
+	liftTop-> WhenPressed(new LiftManuelUp());
 	//manuelLiftUp-> WhenReleased(new Lift_PIDStop());
-	liftBottom-> WhenPressed(new LiftBottom());
+	//liftBottom-> WhenPressed(new LiftBottom());
+	liftBottom-> WhenPressed(new LiftManuelDown());
 	//manuelLiftDown-> WhenReleased(new Lift_PIDStop());
 	jogliftup-> WhenPressed(new LiftJogUp());
 	jogliftup-> WhenReleased(new LiftJogStop());
 	jogliftdown-> WhenPressed(new LiftJogDown());
 	jogliftdown-> WhenReleased(new LiftJogStop());
+	toteClamp-> WhenPressed(new ToteClamp());
+	toteClamp-> WhenReleased(new ToteUnClamp());
 
 	/*manualLeftUp->WhenPressed(new LeftLiftUp());
 	manualLeftUp->WhenReleased(new LiftStop());

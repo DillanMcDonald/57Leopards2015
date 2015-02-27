@@ -28,6 +28,7 @@ public:
 	JoystickButton *manualRightDown;
 	JoystickButton *jogliftup;
 	JoystickButton *jogliftdown;
+	JoystickButton *toteClamp;
 	Joystick *GetDriveJoystick();
 	Joystick *GetBoxingJoystick();
 };

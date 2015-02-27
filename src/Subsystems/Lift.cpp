@@ -26,7 +26,8 @@ lastLeftHeight =1;
 lastRightHeight =1;
 leftLeadscrew->SetPID(0.0,0.0,0.0,0.0);
 rightLeadscrew->SetPID(0.0,0.0,0.0,0.0);
-
+leftClamp= new Solenoid(10, ch_OpenClamp);
+rightClamp = new Solenoid(10, ch_ClampClamp);
 }
 
 void Lift::InitDefaultCommand()
@@ -37,6 +38,16 @@ void Lift::InitDefaultCommand()
 
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
+
+void Lift::ClampOn(){
+leftClamp->Set(true);
+rightClamp->Set(false);
+
+}
+void Lift::ClampOff(){
+leftClamp->Set(false);
+rightClamp->Set(true);
+}
 
 bool Lift::SetLeftLiftHeight(float setleftheight){
 	bool atsetheight =0;

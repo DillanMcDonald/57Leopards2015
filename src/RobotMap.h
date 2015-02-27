@@ -59,6 +59,7 @@ static const uint32_t ch_leftwheelrotate =5;
 static const uint32_t ch_LiftUp=6;
 static const uint32_t ch_LiftDown=7;
 static const uint32_t ch_coopertitionButton= 8;
+static const uint32_t ch_ToteClamp=9;
 static const uint32_t ch_PIDLiftDown = 10;
 static const uint32_t ch_PIDLiftUp = 11;
 //unused channel designators
@@ -79,4 +80,7 @@ static const uint32_t ch_LeftLeadscrewPot = 1;
 static const uint32_t ch_RightLeadscrewPot = 2;
 static const uint32_t ch_Ultrasonic =3;
 
+//Clamping Pistons
+static const uint32_t ch_OpenClamp=2;
+static const uint32_t ch_ClampClamp=3;
 #endif

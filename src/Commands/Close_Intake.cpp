@@ -16,7 +16,7 @@ void Close_Intake::Initialize()
 // Called repeatedly when this Command is scheduled to run
 void Close_Intake::Execute()
 {
-	intake->ClampClose();
+	if(!intake->ClampClose())intake->ClampClose();
 }
 
 // Make this return true when this Command no longer needs to run execute()

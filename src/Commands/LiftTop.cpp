@@ -12,6 +12,7 @@ void LiftTop::Initialize()
 {
 	if (!lift->IsPIDEnabled()) lift->EnablePID();
 	lift->SetTarget(2.12, kLiftRate);
+
 }
 
 // Called repeatedly when this Command is scheduled to run
