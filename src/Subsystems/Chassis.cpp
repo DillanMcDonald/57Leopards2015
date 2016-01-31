@@ -30,18 +30,22 @@ void Chassis::DriveWithJoystick(Joystick *drivestick)
 	double y=drivestick->GetX();
 	double z=drivestick->GetZ();
 	//Wait(0.01);
-	frontrightm->Set(-(x+y+z));
+	/*frontrightm->Set(-(x+y+z));
 	frontleftm->Set((x+y-z));
 	backrightm->Set(-(x-y+z));
-	backleftm->Set((x-y-z));
+	backleftm->Set((x-y-z));*/
+	frontrightm->Set(y+x);
+	frontleftm->Set(y-x);
+	backrightm->Set(y+x);
+	backleftm->Set(y-x);
 
-	SmartDashboard::PutNumber("Encoder Velocity (FR)", frontrightm->GetEncVel());
-	SmartDashboard::PutNumber("Encoder Velocity (BR)", backrightm->GetEncVel());
-	SmartDashboard::PutNumber("Encoder Velocity (BL)", backleftm->GetEncVel());
-	SmartDashboard::PutNumber("Encoder Velocity (FL)", frontleftm->GetEncVel());
+	//SmartDashboard::PutNumber("Encoder Velocity (FR)", frontrightm->GetEncVel());
+	//SmartDashboard::PutNumber("Encoder Velocity (BR)", backrightm->GetEncVel());
+	//SmartDashboard::PutNumber("Encoder Velocity (BL)", backleftm->GetEncVel());
+	//SmartDashboard::PutNumber("Encoder Velocity (FL)", frontleftm->GetEncVel());
 }
 
-void Chassis::mecanumDrive(double y, double x, double z, double targetfr, double targetbr, double targetbl, double targetfl){
+/*void Chassis::mecanumDrive(double y, double x, double z, double targetfr, double targetbr, double targetbl, double targetfl){
 	//drive->MecanumDrive_Cartesian(x,y,z);
 	//Wait(0.01);
 	if(frontrightm->GetEncVel() != targetfr){
@@ -76,4 +80,4 @@ void Chassis::mecanumDrive(double y, double x, double z, double targetfr, double
 	backleftm->Set((x-y-z));
 
 }
-
+*/

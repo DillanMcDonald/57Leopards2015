@@ -15,7 +15,7 @@ private:
 	Command *driveCommand;
 	Command *autonomousCommand;
 	LiveWindow *lw;
-	Compressor *c = new Compressor(10);
+	//Compressor *c = new Compressor(10);
 	IMAQdxSession session;
 	Image *frame;
 	IMAQdxError imaqError;
@@ -24,29 +24,29 @@ private:
 		cnt = 0;
 		//autonomousCommand = new exampleCommand();
 		//lw = LiveWindow::GetInstance();
-		c -> SetClosedLoopControl(true);
+		//c -> SetClosedLoopControl(true);
 	    // create an image
 		frame = imaqCreateImage(IMAQ_IMAGE_RGB, 0);
 		//the camera name (ex "cam0") can be found through the roborio web interface
-		imaqError = IMAQdxOpenCamera("cam0", IMAQdxCameraControlModeController, &session);
+		//imaqError = IMAQdxOpenCamera("cam0", IMAQdxCameraControlModeController, &session);
 		if(imaqError != IMAQdxErrorSuccess) {
-			DriverStation::ReportError("IMAQdxOpenCamera error: " + std::to_string((long)imaqError) + "\n");
+			//DriverStation::ReportError("IMAQdxOpenCamera error: " + std::to_string((long)imaqError) + "\n");
 		}
-		imaqError = IMAQdxConfigureGrab(session);
+		//imaqError = IMAQdxConfigureGrab(session);
 		if(imaqError != IMAQdxErrorSuccess) {
-			DriverStation::ReportError("IMAQdxConfigureGrab error: " + std::to_string((long)imaqError) + "\n");
+			//DriverStation::ReportError("IMAQdxConfigureGrab error: " + std::to_string((long)imaqError) + "\n");
 		}
 	}
 	
 	void DisabledPeriodic() override
 	{
 		Scheduler::GetInstance()->Run();
-		c -> SetClosedLoopControl(true);
+		//c -> SetClosedLoopControl(true);
 	}
 
 	void AutonomousInit() override
 	{
-		c -> SetClosedLoopControl(true);
+		//c -> SetClosedLoopControl(true);
 		if (autonomousCommand != NULL)
 			autonomousCommand->Start();
 
@@ -58,7 +58,7 @@ private:
 		Scheduler::GetInstance()->Run();
 		if ((++cnt)%reportRate == 0)
 		{
-			CommandBase::lift->printLiftValues();
+			//CommandBase::lift->printLiftValues();
 		}
 	}
 
@@ -71,13 +71,13 @@ private:
 		if (autonomousCommand != NULL)
 			autonomousCommand->Cancel();
 		//driveCommand.start();
-		c->SetClosedLoopControl(true);
+		//c->SetClosedLoopControl(true);
 	}
 
 	void TeleopPeriodic() override
 	{
 		Scheduler::GetInstance()->Run();
-		IMAQdxGrab(session, frame, true, NULL);
+		/*IMAQdxGrab(session, frame, true, NULL);
 			if(imaqError != IMAQdxErrorSuccess) {
 				DriverStation::ReportError("IMAQdxGrab error: " + std::to_string((long)imaqError) + "\n");
 			} else {
@@ -87,7 +87,7 @@ private:
 //			if ((++cnt)%reportRate == 0)
 			{
 				CommandBase::lift->printLiftValues();
-			}
+			}*/
 	}
 
 	void TestPeriodic() override
